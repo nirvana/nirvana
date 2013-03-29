@@ -27,12 +27,12 @@ defmodule Nirvana.Mixfile do
   
   defp deps do
     [ 
-		  {:couchie, github: "NirvanaPlatform/couchie"},
+		  {:couchie, github: "nirvana/couchie"},
       {:ranch,  github: "extend/ranch", tag: "0.6.1"},
       {:cowboy, github: "extend/cowboy"}]
   end
 end
-## 	 {:couchie, github: "NirvanaPlatform/couchie"}  
+## 	 {:couchie, github: "nirvana/couchie"}  
 ## 	 {:couchie, github: "n1rvana/couchie"}   
 ## 	 {:cberl, github: "aliyakamercan/cberl"}   #Change this "n1rvana/cberl" or chitika/cberl
 ##      {:jsx,  github: "talentdeficit/jsx"},
