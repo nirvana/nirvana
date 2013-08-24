@@ -20,12 +20,13 @@ defmodule Nirvana do
 	Couchie.open(:cb)
 
 	# Setup Cowboy
-	IO.puts "Starting Cowboy"
+	port = 8196
+	IO.puts "Starting Cowboy on port #{port}"
 	dispatch = :cowboy_router.compile([
 	           {:_, [{"/", Nirvana.TopPageHandler, []}]}
 	         ])
 	{:ok, _} = :cowboy.start_http(:http, 100,
-	                            [port: 8196],
+	                            [port: port],
 	                            [env: [dispatch: dispatch]])
    # Start Nirvana OTP App 
 	IO.puts "Starting Nirvana"

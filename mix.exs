@@ -27,11 +27,16 @@ defmodule Nirvana.Mixfile do
   
   defp deps do
     [ 
-		  {:couchie, github: "nirvana/couchie"},
-      {:ranch,  github: "extend/ranch", tag: "0.6.1"},
+      {:couchie, github: "nirvana/couchie", override: true},  # included by amnesic
+		  {:amnesic, github: "nirvana/amnesic"},
+      {:flaky, github: "nirvana/flaky"},
+#      {:erldns, github: "aetrion/erl-dns"},   #currently not compiling because /include is not being picked up.
       {:cowboy, github: "extend/cowboy"}]
   end
 end
+
+## Elli: knutin/elli
+
 ## 	 {:couchie, github: "nirvana/couchie"}  
 ## 	 {:couchie, github: "n1rvana/couchie"}   
 ## 	 {:cberl, github: "aliyakamercan/cberl"}   #Change this "n1rvana/cberl" or chitika/cberl

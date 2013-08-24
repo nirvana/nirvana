@@ -11,15 +11,13 @@ defmodule Nirvana.TopPageHandler do
 
 	@doc "handle http request"
   def handle(req, state) do
-    key = "mtest"
-    #now we have a dict with an elixir module under they key "code"
+ #   IO.puts "handle, load_module first time"
+ #   Nirvana.TopPageHandler.load_module("example")
+    IO.puts "handle load_module second time"
+    module = Nirvana.TopPageHandler.load_module("mtest")
+   #now we have a dict with an elixir module under they key "code"
     reason = ""
     try do
-      {key, _, dict} = Couchie.get(:cb, key)
-      code = Dict.get!(dict, "code")
-      ast = Code.string_to_ast!(code)
-      module = Module.concat(Nirvana, "Version1")
-      Module.create module, ast, []
       module.handle(req, state) #ntest calls cowboy_req.reply itself
     rescue
       x in [RuntimeError] ->
@@ -28,6 +26,23 @@ defmodule Nirvana.TopPageHandler do
       :cowboy_req.reply(400, [], reason, req)
     end
     {:ok, req, state}
+  end
+
+  def load_module(key) do
+    IO.puts "load_module for key #{key}"
+    {key, _, dict} = Couchie.get(:cb, key)
+    IO.puts "Key: #{key}"
+
+    IO.puts "load_module phase 2"
+    code = Dict.get(dict, "code", nil)
+# Apparently this was deprecated
+# ast = Code.string_to_ast!(code)
+    quoted = Code.string_to_quoted(code)
+    IO.puts "load_module 3"
+    prefix = Module.concat(Nirvana, "String")
+    Module.create prefix, quoted, []
+    IO.puts "load_module 4 - module is: #{prefix}"
+    prefix
   end
 
 	@doc "cleanup here"
