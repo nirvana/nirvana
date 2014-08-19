@@ -4,9 +4,16 @@ defmodule Nirvana.TopPageHandler do
 
       """
    
-     @doc "init - setup for the handler"
-  def init(_transport, req, []) do
-    {:ok, req, nil}
+      @doc """
+      Init does setup for handling the request. Can do protocol escalation.
+      Third parameter is the list of ops defined in the cowboy routing table.
+      This parameter is not changed during the life of the cowboy program.
+        Returns: Protocol escalation tuple, or {:ok, req, state}
+        - Returned state is delivered to subsequent calls within the handler (specifcially handle)
+ 
+      """
+  def init(_transport, req, [dbHash]) do
+    {:ok, req, dbHash}
   end
 
 	@doc "handle http request"

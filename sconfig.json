@@ -1,0 +1,17 @@
+{
+    "interface": ":4984",
+    "adminInterface": ":4985",
+    "log": ["CRUD", "REST"],
+    "databases": {
+        "nirvana": {
+            "server": "http://localhost:8091",
+            "bucket": "nirvana",
+            "sync": `function(doc) {channel(doc.channels);}`
+        },
+        "sync": {
+            "server": "http://localhost:8091",
+            "bucket": "sync",
+            "sync": `function(doc) {channel(doc.channels);}`
+        }
+    }
+}

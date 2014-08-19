@@ -15,21 +15,21 @@ defmodule Nirvana do
   @doc "Start- launches cowboy, other initialization, sets up supervisor"
 
   def start(_type, _args) do
-	# Setup Couchie
-	IO.puts "Starting Couchie"
-	Couchie.open(:cb)
+  	IO.puts "Nirvana: Starting Amnesic, setting up cache of caches."
+	IO.puts "DB: Connecting to Nirvana Buckets..."
+	dbHash = DB.setup()
+	IO.puts "DB: Completed connecting to database."
 
-	# Setup Cowboy
 	port = 8196
-	IO.puts "Starting Cowboy on port #{port}"
+	IO.puts "Nirvana: Starting Cowboy on port #{port}"
 	dispatch = :cowboy_router.compile([
-	           {:_, [{"/", Nirvana.TopPageHandler, []}]}
+	           {:_, [{:_, Nirvana.TopPageHandler, [dbHash]}]}
 	         ])
 	{:ok, _} = :cowboy.start_http(:http, 100,
 	                            [port: port],
 	                            [env: [dispatch: dispatch]])
    # Start Nirvana OTP App 
-	IO.puts "Starting Nirvana"
+	IO.puts "Starting Nirvana OTP App"
 	Nirvana.Supervisor.start_link
   end
 end
